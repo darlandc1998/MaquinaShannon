@@ -2,12 +2,18 @@ package telas;
 
 import enums.DirecaoEnum;
 import enums.SeparadorVariavelEnum;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelos.Item;
 import modelos.ItensEstados;
@@ -15,12 +21,12 @@ import utils.UtilAlgoritmoTuring;
 import utils.UtilTabela;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     private List<Item> tabelaMapeamentoAlgoritmo;
-    
+
     public Principal() {
         initComponents();
-        
+        initComponentsData();
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +35,9 @@ public class Principal extends javax.swing.JFrame {
 
         jTab = new javax.swing.JTabbedPane();
         jPanelExecucao = new javax.swing.JPanel();
+        jScrollPanel = new javax.swing.JScrollPane();
+        jPanelDados = new javax.swing.JPanel();
+        jBtnProcessar = new javax.swing.JButton();
         jPanelAlgoritmo = new javax.swing.JPanel();
         jLblQtdEstados = new javax.swing.JLabel();
         JLblDerivacaoEstados = new javax.swing.JLabel();
@@ -43,18 +52,34 @@ public class Principal extends javax.swing.JFrame {
         setTitle("Máquina de Shannon");
         setAlwaysOnTop(true);
         setName("jFramePrincipal"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
+
+        jPanelDados.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jScrollPanel.setViewportView(jPanelDados);
+
+        jBtnProcessar.setText("Processar");
+        jBtnProcessar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnProcessarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelExecucaoLayout = new javax.swing.GroupLayout(jPanelExecucao);
         jPanelExecucao.setLayout(jPanelExecucaoLayout);
         jPanelExecucaoLayout.setHorizontalGroup(
             jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 881, Short.MAX_VALUE)
+            .addComponent(jScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
+            .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                .addComponent(jBtnProcessar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelExecucaoLayout.setVerticalGroup(
             jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+            .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBtnProcessar)
+                .addGap(0, 211, Short.MAX_VALUE))
         );
 
         jTab.addTab("Execução", jPanelExecucao);
@@ -174,44 +199,56 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBtnGerarTabelaMouseClicked
 
+    private void initComponentsData() {
+        for (int i = 0; i < 12; i++) {
+            getPanel().add(getJtextField());
+        }
+
+        getPanel().add(getBtnAdd());
+    }
+
     private void jBtnSalvarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarTabelaActionPerformed
-        
-        if (jTableVariaveis.getRowCount() == 0){
+
+        if (jTableVariaveis.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Crie a tabela e adicione os dados necessários");
             return;
         }
-        
+
         tabelaMapeamentoAlgoritmo = gerarListaAlgoritmo();
 
-        List<String> dados = new ArrayList<>();
-        dados.add(">");
-        dados.add("*");
-        dados.add("*");
-        dados.add("*");
-        dados.add("B");
-        dados.add("*");
-        dados.add("*");
-        dados.add("B");
-        
-        UtilAlgoritmoTuring.executarAlgoritmo(tabelaMapeamentoAlgoritmo, dados);
-        
-        System.out.println("Dados = "+dados.toString());
+//        List<String> dados = new ArrayList<>();
+//        dados.add(">");
+//        dados.add("*");
+//        dados.add("*");
+//        dados.add("*");
+//        dados.add("B");
+//        dados.add("*");
+//        dados.add("*");
+//        dados.add("B");
+//
+//        UtilAlgoritmoTuring.executarAlgoritmo(tabelaMapeamentoAlgoritmo, dados);
+//
+//        System.out.println("Dados = " + dados.toString());
     }//GEN-LAST:event_jBtnSalvarTabelaActionPerformed
+
+    private void jBtnProcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnProcessarMouseClicked
+        System.out.println("Dados = "+getDataFields());
+    }//GEN-LAST:event_jBtnProcessarMouseClicked
 
     private void montarTabela() {
         Integer quantidadeEstados = Integer.parseInt(jTxtQtdEstados.getText());
         List<String> variaveis = Arrays.asList(jTxtVariaveis.getText().split(SeparadorVariavelEnum.SEPARADOR.getKey()));
         List<String> estados = UtilTabela.getEstados(quantidadeEstados, variaveis.get(0));
-        
+
         DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
 
         limparTabela();
-        
+
         JComboBox jCbVariaveis = new JComboBox(UtilTabela.getOpcoesComboBox(variaveis.toArray()));
         JComboBox jCbDirecoes = new JComboBox(UtilTabela.getOpcoesComboBox(DirecaoEnum.values()));
         JComboBox jCbEstados = new JComboBox(UtilTabela.getOpcoesComboBox(estados.toArray()));
-        
-        for (String estado: estados){
+
+        for (String estado : estados) {
             for (int j = 0; j < variaveis.size(); j++) {
                 model.addRow(new Object[]{estado});
                 jTableVariaveis.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jCbVariaveis));
@@ -222,13 +259,13 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void limparTabela() {
         DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
         for (int i = model.getRowCount() - 1; i >= 0; i--) {
             model.removeRow(i);
         }
-        
+
         tabelaMapeamentoAlgoritmo = null;
     }
 
@@ -239,15 +276,15 @@ public class Principal extends javax.swing.JFrame {
 
         for (int count = 0; count < model.getRowCount(); count++) {
             String estado = (String) model.getValueAt(count, 0);
-            String le =  (String)  model.getValueAt(count, 1);
-            String proxEstado =  (String) model.getValueAt(count, 2);
-            String escreva =  (String) model.getValueAt(count, 3);
-            DirecaoEnum direcao = (DirecaoEnum)  model.getValueAt(count, 4);
+            String le = (String) model.getValueAt(count, 1);
+            String proxEstado = (String) model.getValueAt(count, 2);
+            String escreva = (String) model.getValueAt(count, 3);
+            DirecaoEnum direcao = (DirecaoEnum) model.getValueAt(count, 4);
 
-            if (direcao == null && proxEstado == null && le == null && escreva == null){
+            if (direcao == null && proxEstado == null && le == null && escreva == null) {
                 continue;
             }
-            
+
             Item itemEstado = new Item(estado);
 
             if (itens.contains(itemEstado)) {
@@ -268,6 +305,69 @@ public class Principal extends javax.swing.JFrame {
         }
 
         return itens;
+    }
+
+    private JPanel getPanel() {
+        return jPanelDados;
+    }
+
+    private JTextField getJtextField() {
+        JTextField jTextField = new JTextField();
+        jTextField.setSize(100, 10);
+        jTextField.setPreferredSize(new Dimension(60, 40));
+        jTextField.setAutoscrolls(false);
+        return jTextField;
+    }
+
+    private JButton getBtnAdd() {
+        JButton btnAdd = new JButton();
+        btnAdd.setName("jBtnAdd");
+        btnAdd.setText("+");
+        btnAdd.setPreferredSize(new Dimension(60, 40));
+        btnAdd.addActionListener((ActionEvent e) -> {
+            int quantidade = getPanel().getComponentCount();
+            getPanel().add(getJtextField(), quantidade - 1);
+            renderPanel();
+        });
+        return btnAdd;
+    }
+
+    private Component[] getComponentsPanel() {
+        return getPanel().getComponents();
+    }
+
+    private void renderPanel() {
+        getPanel().revalidate();
+        getPanel().repaint();
+    }
+
+    private ArrayList<String> getDataFields() {
+        ArrayList<String> dados = new ArrayList<>();
+
+        for (Component component : getComponentsPanel()) {
+            if (component instanceof JTextField) {
+                JTextField field = (JTextField) component;
+                dados.add(field.getText());
+            }
+        }
+
+        return dados;
+    }
+
+    private void updateDataFields(ArrayList<String> data) {
+        Component[] components = getComponentsPanel();
+
+        for (int i = 0; i < components.length; i++) {
+            Component component = components[i];
+            if (component instanceof JTextField) {
+                JTextField field = (JTextField) component;
+
+                if (data.size() > i) {
+                    field.setText(data.get(i));
+                }
+
+            }
+        }
     }
 
     public static void main(String args[]) {
@@ -305,11 +405,14 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLblDerivacaoEstados;
     private javax.swing.JButton jBtnGerarTabela;
+    private javax.swing.JButton jBtnProcessar;
     private javax.swing.JButton jBtnSalvarTabela;
     private javax.swing.JLabel jLblQtdEstados;
     private javax.swing.JPanel jPanelAlgoritmo;
+    private javax.swing.JPanel jPanelDados;
     private javax.swing.JPanel jPanelExecucao;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JTabbedPane jTab;
     private javax.swing.JTable jTableVariaveis;
     private javax.swing.JTextField jTxtQtdEstados;
