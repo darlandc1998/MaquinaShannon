@@ -63,6 +63,11 @@ public class Principal extends javax.swing.JFrame {
                 jBtnProcessarMouseClicked(evt);
             }
         });
+        jBtnProcessar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnProcessarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelExecucaoLayout = new javax.swing.GroupLayout(jPanelExecucao);
         jPanelExecucao.setLayout(jPanelExecucaoLayout);
@@ -214,8 +219,8 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        tabelaMapeamentoAlgoritmo = gerarListaAlgoritmo();
-
+        setTabelaMapeamentoAlgoritmo(gerarListaAlgoritmo());
+        
 //        List<String> dados = new ArrayList<>();
 //        dados.add(">");
 //        dados.add("*");
@@ -232,8 +237,20 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnSalvarTabelaActionPerformed
 
     private void jBtnProcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnProcessarMouseClicked
-        System.out.println("Dados = "+getDataFields());
+        
+        if (getTabelaMapeamentoAlgoritmo() == null || getTabelaMapeamentoAlgoritmo().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Crie um algoritmo para executar o programa");
+            return;
+        }
+        
+        ArrayList<String> dados = getDataFields();
+        UtilAlgoritmoTuring.executarAlgoritmo(getTabelaMapeamentoAlgoritmo(), dados);
+        updateDataFields(dados);
     }//GEN-LAST:event_jBtnProcessarMouseClicked
+
+    private void jBtnProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProcessarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnProcessarActionPerformed
 
     private void montarTabela() {
         Integer quantidadeEstados = Integer.parseInt(jTxtQtdEstados.getText());
@@ -266,7 +283,8 @@ public class Principal extends javax.swing.JFrame {
             model.removeRow(i);
         }
 
-        tabelaMapeamentoAlgoritmo = null;
+        setTabelaMapeamentoAlgoritmo(null);
+        
     }
 
     private List<Item> gerarListaAlgoritmo() {
@@ -370,6 +388,14 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
+    public List<Item> getTabelaMapeamentoAlgoritmo() {
+        return tabelaMapeamentoAlgoritmo;
+    }
+
+    public void setTabelaMapeamentoAlgoritmo(List<Item> tabelaMapeamentoAlgoritmo) {
+        this.tabelaMapeamentoAlgoritmo = tabelaMapeamentoAlgoritmo;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
