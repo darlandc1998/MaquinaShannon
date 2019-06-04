@@ -119,6 +119,8 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jBtnGerarTabela" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jBtnAbrirPDF" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBtnSalvarTabela" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -136,6 +138,7 @@
                           <Component id="jTxtVariaveis" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBtnGerarTabela" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBtnSalvarTabela" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBtnAbrirPDF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="273" max="32767" attributes="0"/>
@@ -227,6 +230,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnSalvarTabelaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jBtnAbrirPDF">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir PDF"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jBtnAbrirPDFMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

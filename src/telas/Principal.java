@@ -5,19 +5,26 @@ import enums.SeparadorVariavelEnum;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import modelos.Item;
 import modelos.ItensEstados;
 import utils.UtilAlgoritmoTuring;
+import utils.UtilPDF;
 import utils.UtilTabela;
 
 public class Principal extends javax.swing.JFrame {
@@ -47,6 +54,7 @@ public class Principal extends javax.swing.JFrame {
         jTableVariaveis = new javax.swing.JTable();
         jBtnGerarTabela = new javax.swing.JButton();
         jBtnSalvarTabela = new javax.swing.JButton();
+        jBtnAbrirPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Máquina de Shannon");
@@ -128,6 +136,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jBtnAbrirPDF.setText("Abrir PDF");
+        jBtnAbrirPDF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnAbrirPDFMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelAlgoritmoLayout = new javax.swing.GroupLayout(jPanelAlgoritmo);
         jPanelAlgoritmo.setLayout(jPanelAlgoritmoLayout);
         jPanelAlgoritmoLayout.setHorizontalGroup(
@@ -144,6 +159,8 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnGerarTabela)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnAbrirPDF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnSalvarTabela)
                 .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
@@ -158,7 +175,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnGerarTabela)
-                    .addComponent(jBtnSalvarTabela))
+                    .addComponent(jBtnSalvarTabela)
+                    .addComponent(jBtnAbrirPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
         );
@@ -220,7 +238,7 @@ public class Principal extends javax.swing.JFrame {
         }
 
         setTabelaMapeamentoAlgoritmo(gerarListaAlgoritmo());
-        
+
 //        List<String> dados = new ArrayList<>();
 //        dados.add(">");
 //        dados.add("*");
@@ -237,20 +255,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnSalvarTabelaActionPerformed
 
     private void jBtnProcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnProcessarMouseClicked
-        
-        if (getTabelaMapeamentoAlgoritmo() == null || getTabelaMapeamentoAlgoritmo().isEmpty()){
+
+        if (getTabelaMapeamentoAlgoritmo() == null || getTabelaMapeamentoAlgoritmo().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Crie um algoritmo para executar o programa");
             return;
         }
-        
+
         ArrayList<String> dados = getDataFields();
+        
         UtilAlgoritmoTuring.executarAlgoritmo(getTabelaMapeamentoAlgoritmo(), dados);
+        
         updateDataFields(dados);
     }//GEN-LAST:event_jBtnProcessarMouseClicked
 
     private void jBtnProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProcessarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnProcessarActionPerformed
+
+    private void jBtnAbrirPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnAbrirPDFMouseClicked
+        abrirDialogPDF();
+    }//GEN-LAST:event_jBtnAbrirPDFMouseClicked
 
     private void montarTabela() {
         Integer quantidadeEstados = Integer.parseInt(jTxtQtdEstados.getText());
@@ -284,7 +308,7 @@ public class Principal extends javax.swing.JFrame {
         }
 
         setTabelaMapeamentoAlgoritmo(null);
-        
+
     }
 
     private List<Item> gerarListaAlgoritmo() {
@@ -395,7 +419,25 @@ public class Principal extends javax.swing.JFrame {
     public void setTabelaMapeamentoAlgoritmo(List<Item> tabelaMapeamentoAlgoritmo) {
         this.tabelaMapeamentoAlgoritmo = tabelaMapeamentoAlgoritmo;
     }
-    
+
+    private void abrirDialogPDF() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("PDF", "pdf"));
+
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                String[] linesPdf = UtilPDF.readLines(selectedFile.getAbsolutePath());
+                for (String line: linesPdf){
+                    System.out.println("Line = "+line);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -430,6 +472,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLblDerivacaoEstados;
+    private javax.swing.JButton jBtnAbrirPDF;
     private javax.swing.JButton jBtnGerarTabela;
     private javax.swing.JButton jBtnProcessar;
     private javax.swing.JButton jBtnSalvarTabela;
