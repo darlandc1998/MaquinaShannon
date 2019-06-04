@@ -29,7 +29,7 @@ import utils.UtilTabela;
 
 public class Principal extends javax.swing.JFrame {
 
-    private List<Item> tabelaMapeamentoAlgoritmo;
+    private List<Item> tableMappingAlgorithm;
 
     public Principal() {
         initComponents();
@@ -218,7 +218,7 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        montarTabela();
+        createTable();
 
     }//GEN-LAST:event_jBtnGerarTabelaMouseClicked
 
@@ -237,35 +237,25 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        setTabelaMapeamentoAlgoritmo(gerarListaAlgoritmo());
-
-//        List<String> dados = new ArrayList<>();
-//        dados.add(">");
-//        dados.add("*");
-//        dados.add("*");
-//        dados.add("*");
-//        dados.add("B");
-//        dados.add("*");
-//        dados.add("*");
-//        dados.add("B");
-//
-//        UtilAlgoritmoTuring.executarAlgoritmo(tabelaMapeamentoAlgoritmo, dados);
-//
-//        System.out.println("Dados = " + dados.toString());
+        setTableMappingAlgorithm(createListAlgorithm());
     }//GEN-LAST:event_jBtnSalvarTabelaActionPerformed
 
     private void jBtnProcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnProcessarMouseClicked
 
-        if (getTabelaMapeamentoAlgoritmo() == null || getTabelaMapeamentoAlgoritmo().isEmpty()) {
+        if (getTableMappingAlgorithm() == null || getTableMappingAlgorithm().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Crie um algoritmo para executar o programa");
             return;
         }
 
-        ArrayList<String> dados = getDataFields();
-        
-        UtilAlgoritmoTuring.executarAlgoritmo(getTabelaMapeamentoAlgoritmo(), dados);
-        
-        updateDataFields(dados);
+        List<String> datasExecution = getDataFields();
+
+        if (datasExecution == null || datasExecution.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Insira os dados para executar o programa");
+            return;
+        }
+
+        UtilAlgoritmoTuring.execute(getTableMappingAlgorithm(), datasExecution, getComponentsPanel(), this);
+
     }//GEN-LAST:event_jBtnProcessarMouseClicked
 
     private void jBtnProcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProcessarActionPerformed
@@ -273,17 +263,17 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnProcessarActionPerformed
 
     private void jBtnAbrirPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnAbrirPDFMouseClicked
-        abrirDialogPDF();
+        openDialogPDF();
     }//GEN-LAST:event_jBtnAbrirPDFMouseClicked
 
-    private void montarTabela() {
+    private void createTable() {
         Integer quantidadeEstados = Integer.parseInt(jTxtQtdEstados.getText());
         List<String> variaveis = Arrays.asList(jTxtVariaveis.getText().split(SeparadorVariavelEnum.SEPARADOR.getKey()));
         List<String> estados = UtilTabela.getEstados(quantidadeEstados, variaveis.get(0));
 
         DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
 
-        limparTabela();
+        cleartable();
 
         JComboBox jCbVariaveis = new JComboBox(UtilTabela.getOpcoesComboBox(variaveis.toArray()));
         JComboBox jCbDirecoes = new JComboBox(UtilTabela.getOpcoesComboBox(DirecaoEnum.values()));
@@ -301,17 +291,17 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private void limparTabela() {
+    private void cleartable() {
         DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
         for (int i = model.getRowCount() - 1; i >= 0; i--) {
             model.removeRow(i);
         }
 
-        setTabelaMapeamentoAlgoritmo(null);
+        setTableMappingAlgorithm(null);
 
     }
 
-    private List<Item> gerarListaAlgoritmo() {
+    private List<Item> createListAlgorithm() {
         List<Item> itens = new ArrayList<>();
 
         DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
@@ -389,38 +379,25 @@ public class Principal extends javax.swing.JFrame {
         for (Component component : getComponentsPanel()) {
             if (component instanceof JTextField) {
                 JTextField field = (JTextField) component;
-                dados.add(field.getText());
+                String texto = field.getText();
+                if (!texto.trim().isEmpty()){
+                    dados.add(texto);
+                }
             }
         }
 
         return dados;
     }
 
-    private void updateDataFields(ArrayList<String> data) {
-        Component[] components = getComponentsPanel();
-
-        for (int i = 0; i < components.length; i++) {
-            Component component = components[i];
-            if (component instanceof JTextField) {
-                JTextField field = (JTextField) component;
-
-                if (data.size() > i) {
-                    field.setText(data.get(i));
-                }
-
-            }
-        }
+    public List<Item> getTableMappingAlgorithm() {
+        return tableMappingAlgorithm;
     }
 
-    public List<Item> getTabelaMapeamentoAlgoritmo() {
-        return tabelaMapeamentoAlgoritmo;
+    public void setTableMappingAlgorithm(List<Item> tableMappingAlgorithm) {
+        this.tableMappingAlgorithm = tableMappingAlgorithm;
     }
 
-    public void setTabelaMapeamentoAlgoritmo(List<Item> tabelaMapeamentoAlgoritmo) {
-        this.tabelaMapeamentoAlgoritmo = tabelaMapeamentoAlgoritmo;
-    }
-
-    private void abrirDialogPDF() {
+    private void openDialogPDF() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("PDF", "pdf"));
 
@@ -428,8 +405,8 @@ public class Principal extends javax.swing.JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             try {
                 String[] linesPdf = UtilPDF.readLines(selectedFile.getAbsolutePath());
-                for (String line: linesPdf){
-                    System.out.println("Line = "+line);
+                for (String line : linesPdf) {
+                    System.out.println("Line = " + line);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
