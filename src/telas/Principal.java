@@ -1,6 +1,5 @@
 package telas;
 
-import enums.DirecaoEnum;
 import enums.SeparadorVariavelEnum;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -8,24 +7,20 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import modelos.Item;
-import modelos.ItensEstados;
 import utils.UtilAlgoritmoTuring;
-import utils.UtilPDF;
-import utils.UtilTabela;
+import utils.UtilFile;
+import utils.UtilTable;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -136,7 +131,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jBtnAbrirPDF.setText("Abrir PDF");
+        jBtnAbrirPDF.setText("Abrir arquivo");
         jBtnAbrirPDF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnAbrirPDFMouseClicked(evt);
@@ -199,17 +194,13 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnGerarTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnGerarTabelaMouseClicked
-
         String msgError = null;
 
-        String quantidadeEstados = jTxtQtdEstados.getText();
-        String variaveis = jTxtVariaveis.getText();
-
-        if (variaveis.trim().isEmpty()) {
+        if (getVariaveis().trim().isEmpty()) {
             msgError = "Variaveis vazias";
         }
 
-        if (quantidadeEstados.trim().isEmpty()) {
+        if (getQtdEstados().trim().isEmpty()) {
             msgError = "Quantidade de estados vazia";
         }
 
@@ -232,12 +223,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void jBtnSalvarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarTabelaActionPerformed
 
-        if (jTableVariaveis.getRowCount() == 0) {
+        if (getTable().getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Crie a tabela e adicione os dados necessários");
             return;
         }
 
-        setTableMappingAlgorithm(createListAlgorithm());
+        setTableMappingAlgorithm(UtilTable.createListAlgorithm(getTable()));
     }//GEN-LAST:event_jBtnSalvarTabelaActionPerformed
 
     private void jBtnProcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnProcessarMouseClicked
@@ -263,84 +254,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnProcessarActionPerformed
 
     private void jBtnAbrirPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnAbrirPDFMouseClicked
-        openDialogPDF();
+        openDialogFile();
     }//GEN-LAST:event_jBtnAbrirPDFMouseClicked
-
-    private void createTable() {
-        Integer quantidadeEstados = Integer.parseInt(jTxtQtdEstados.getText());
-        List<String> variaveis = Arrays.asList(jTxtVariaveis.getText().split(SeparadorVariavelEnum.SEPARADOR.getKey()));
-        List<String> estados = UtilTabela.getEstados(quantidadeEstados, variaveis.get(0));
-
-        DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
-
-        cleartable();
-
-        JComboBox jCbVariaveis = new JComboBox(UtilTabela.getOpcoesComboBox(variaveis.toArray()));
-        JComboBox jCbDirecoes = new JComboBox(UtilTabela.getOpcoesComboBox(DirecaoEnum.values()));
-        JComboBox jCbEstados = new JComboBox(UtilTabela.getOpcoesComboBox(estados.toArray()));
-
-        for (String estado : estados) {
-            for (int j = 0; j < variaveis.size(); j++) {
-                model.addRow(new Object[]{estado});
-                jTableVariaveis.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jCbVariaveis));
-                jTableVariaveis.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jCbEstados));
-                jTableVariaveis.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jCbVariaveis));
-                jTableVariaveis.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jCbDirecoes));
-            }
-        }
-
-    }
-
-    private void cleartable() {
-        DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
-        for (int i = model.getRowCount() - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
-
-        setTableMappingAlgorithm(null);
-
-    }
-
-    private List<Item> createListAlgorithm() {
-        List<Item> itens = new ArrayList<>();
-
-        DefaultTableModel model = (DefaultTableModel) jTableVariaveis.getModel();
-
-        for (int count = 0; count < model.getRowCount(); count++) {
-            String estado = (String) model.getValueAt(count, 0);
-            String le = (String) model.getValueAt(count, 1);
-            String proxEstado = (String) model.getValueAt(count, 2);
-            String escreva = (String) model.getValueAt(count, 3);
-            DirecaoEnum direcao = (DirecaoEnum) model.getValueAt(count, 4);
-
-            if (direcao == null && proxEstado == null && le == null && escreva == null) {
-                continue;
-            }
-
-            Item itemEstado = new Item(estado);
-
-            if (itens.contains(itemEstado)) {
-                itemEstado = itens.get(itens.indexOf(itemEstado));
-            }
-
-            ItensEstados derivacao = new ItensEstados();
-            derivacao.setDirecao(direcao != null ? direcao.getSimbolo() : null);
-            derivacao.setProxEstado(proxEstado);
-            derivacao.setEstado(le);
-            derivacao.setSimbolo(escreva);
-
-            itemEstado.getItensEstados().add(derivacao);
-
-            if (!itens.contains(itemEstado)) {
-                itens.add(itemEstado);
-            }
-        }
-
-        return itens;
-    }
 
     private JPanel getPanel() {
         return jPanelDados;
+    }
+
+    private JTable getTable() {
+        return jTableVariaveis;
     }
 
     private JTextField getJtextField() {
@@ -375,17 +297,12 @@ public class Principal extends javax.swing.JFrame {
 
     private ArrayList<String> getDataFields() {
         ArrayList<String> dados = new ArrayList<>();
-
         for (Component component : getComponentsPanel()) {
             if (component instanceof JTextField) {
                 JTextField field = (JTextField) component;
-                String texto = field.getText();
-                if (!texto.trim().isEmpty()){
-                    dados.add(texto);
-                }
+                dados.add(field.getText());
             }
         }
-
         return dados;
     }
 
@@ -397,17 +314,59 @@ public class Principal extends javax.swing.JFrame {
         this.tableMappingAlgorithm = tableMappingAlgorithm;
     }
 
-    private void openDialogPDF() {
+    private void createTable() {
+        createTable(null);
+    }
+
+    private void createTable(String[] dados) {
+        setTableMappingAlgorithm(null);
+        UtilTable.createTable(dados, getVariaveis(), getQtdEstados(), getTable());
+    }
+
+    private String getVariaveis() {
+        return jTxtVariaveis.getText();
+    }
+
+    private String getQtdEstados() {
+        return jTxtQtdEstados.getText();
+    }
+
+    private void openDialogFile() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("PDF", "pdf"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("txt", "txt"));
 
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                String[] linesPdf = UtilPDF.readLines(selectedFile.getAbsolutePath());
-                for (String line : linesPdf) {
-                    System.out.println("Line = " + line);
+                List<String> lines = UtilFile.readLines(selectedFile.getAbsolutePath());
+                String[] dados = new String[lines.size()];
+                Integer pos = 0;
+                Boolean documentoValido = true;
+
+                for (String line : lines) {
+
+                    if (line.trim().isEmpty()) {
+                        continue;
+                    }
+
+                    int quantidadeSeparador = line.length() - line.replace(SeparadorVariavelEnum.SEPARADOR.getKey(), "").length();
+
+                    if (quantidadeSeparador < 4) {
+                        documentoValido = false;
+                        break;
+                    }
+
+                    dados[pos++] = line;
                 }
+
+                if (documentoValido) {
+                    jTxtQtdEstados.setText("4");
+                    jTxtVariaveis.setText(">;*");
+                    createTable(dados);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Formato do documento inválido");
+                }
+
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }

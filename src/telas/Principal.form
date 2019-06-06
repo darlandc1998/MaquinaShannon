@@ -234,7 +234,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jBtnAbrirPDF">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Abrir PDF"/>
+                <Property name="text" type="java.lang.String" value="Abrir arquivo"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jBtnAbrirPDFMouseClicked"/>

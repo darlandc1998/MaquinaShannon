@@ -15,8 +15,12 @@ import modelos.ItensEstados;
 public final class UtilAlgoritmoTuring {
 
     public static void execute(List<Item> itens, List<String> operacao, Component[] components, JFrame frame) {
+        updateDataFields(components, operacao);
         paintDataFieldFocus(0, components);
         enableFrame(false, frame);    
+        
+        System.out.println("Itens = "+itens.toString());        
+        System.out.println("Operacao = "+operacao.toString());
         
         new Timer().scheduleAtFixedRate(new TimerTask() {
             Integer pos = 0;
@@ -41,7 +45,7 @@ public final class UtilAlgoritmoTuring {
                     if (estadoAnalisado.getDirecao().equals(DirecaoEnum.FIM.getSimbolo())) {
                         JOptionPane.showMessageDialog(null, "Execução realizada com sucesso!");
                         enableFrame(true, frame);
-                        this.cancel();
+                        this.cancel();                        
                     }
 
                     if (estadoAnalisado.getDirecao().equals(DirecaoEnum.DIREITA.getSimbolo())) {
@@ -59,7 +63,7 @@ public final class UtilAlgoritmoTuring {
 
             }
 
-        }, 2000, 2000);
+        }, 1000, 1000);
     }
 
     private static void updateDataFields(Component[] components, List<String> operacao) {
@@ -68,9 +72,7 @@ public final class UtilAlgoritmoTuring {
             if (component instanceof JTextField){
                 JTextField field = (JTextField) component;
                 field.setBackground(Color.WHITE);
-                field.setText(operacao.size() > i ? operacao.get(i) : "");
-                field.revalidate();
-                field.repaint();
+                field.setText(operacao.size() > i ? operacao.get(i) : "");               
             }
         }
     }
@@ -79,9 +81,7 @@ public final class UtilAlgoritmoTuring {
         Component component = components[pos];
         if (component instanceof JTextField) {
             JTextField field = (JTextField) component;
-            field.setBackground(Color.YELLOW);
-            field.revalidate();
-            field.repaint();
+            field.setBackground(Color.YELLOW);            
         }
     }
     
