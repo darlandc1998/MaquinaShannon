@@ -40,6 +40,10 @@ public class Principal extends javax.swing.JFrame {
         jScrollPanel = new javax.swing.JScrollPane();
         jPanelDados = new javax.swing.JPanel();
         jBtnProcessar = new javax.swing.JButton();
+        jPanelExec = new javax.swing.JPanel();
+        jGifLoader = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLblTitle = new javax.swing.JLabel();
         jPanelAlgoritmo = new javax.swing.JPanel();
         jLblQtdEstados = new javax.swing.JLabel();
         JLblDerivacaoEstados = new javax.swing.JLabel();
@@ -57,10 +61,16 @@ public class Principal extends javax.swing.JFrame {
         setName("jFramePrincipal"); // NOI18N
         setResizable(false);
 
+        jScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
         jPanelDados.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         jScrollPanel.setViewportView(jPanelDados);
 
-        jBtnProcessar.setText("Processar");
+        jBtnProcessar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/play.png"))); // NOI18N
+        jBtnProcessar.setToolTipText("Executar");
+        jBtnProcessar.setMaximumSize(new java.awt.Dimension(40, 40));
+        jBtnProcessar.setMinimumSize(new java.awt.Dimension(40, 40));
         jBtnProcessar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnProcessarMouseClicked(evt);
@@ -72,27 +82,73 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jGifLoader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gifs/gear.gif"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Executando...");
+
+        javax.swing.GroupLayout jPanelExecLayout = new javax.swing.GroupLayout(jPanelExec);
+        jPanelExec.setLayout(jPanelExecLayout);
+        jPanelExecLayout.setHorizontalGroup(
+            jPanelExecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExecLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelExecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jGifLoader))
+                .addGap(351, 351, 351))
+        );
+        jPanelExecLayout.setVerticalGroup(
+            jPanelExecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelExecLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jGifLoader)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jLblTitle.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
+        jLblTitle.setText("Máquina de Shannon ");
+
         javax.swing.GroupLayout jPanelExecucaoLayout = new javax.swing.GroupLayout(jPanelExecucao);
         jPanelExecucao.setLayout(jPanelExecucaoLayout);
         jPanelExecucaoLayout.setHorizontalGroup(
             jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
             .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                .addComponent(jBtnProcessar)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelExec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                        .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLblTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelExecucaoLayout.setVerticalGroup(
             jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelExecucaoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnProcessar)
-                .addGap(0, 211, Short.MAX_VALUE))
+                .addComponent(jLblTitle)
+                .addGap(28, 28, 28)
+                .addComponent(jPanelExec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 60, Short.MAX_VALUE))
         );
 
         jTab.addTab("Execução", jPanelExecucao);
 
-        jLblQtdEstados.setText("Qtd. Estados:");
+        jLblQtdEstados.setText("Qtd. Estados");
 
         JLblDerivacaoEstados.setText("Variáveis");
 
@@ -117,21 +173,29 @@ public class Principal extends javax.swing.JFrame {
         jTableVariaveis.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableVariaveis);
 
-        jBtnGerarTabela.setText("Gerar Tabela");
+        jBtnGerarTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/table-edit.png"))); // NOI18N
+        jBtnGerarTabela.setToolTipText("Gerar tabela");
         jBtnGerarTabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnGerarTabelaMouseClicked(evt);
             }
         });
+        jBtnGerarTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnGerarTabelaActionPerformed(evt);
+            }
+        });
 
-        jBtnSalvarTabela.setText("Salvar");
+        jBtnSalvarTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/content-save.png"))); // NOI18N
+        jBtnSalvarTabela.setToolTipText("Salvar algoritimo para execução");
         jBtnSalvarTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnSalvarTabelaActionPerformed(evt);
             }
         });
 
-        jBtnAbrirPDF.setText("Abrir arquivo");
+        jBtnAbrirPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder-open.png"))); // NOI18N
+        jBtnAbrirPDF.setToolTipText("Abrir algoritimo");
         jBtnAbrirPDF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnAbrirPDFMouseClicked(evt);
@@ -142,38 +206,48 @@ public class Principal extends javax.swing.JFrame {
         jPanelAlgoritmo.setLayout(jPanelAlgoritmoLayout);
         jPanelAlgoritmoLayout.setHorizontalGroup(
             jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
             .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLblQtdEstados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(JLblDerivacaoEstados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnGerarTabela)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBtnAbrirPDF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnSalvarTabela)
+                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
+                        .addComponent(jLblQtdEstados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JLblDerivacaoEstados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAlgoritmoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
         );
         jPanelAlgoritmoLayout.setVerticalGroup(
             jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLblQtdEstados)
-                    .addComponent(JLblDerivacaoEstados)
-                    .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnGerarTabela)
-                    .addComponent(jBtnSalvarTabela)
-                    .addComponent(jBtnAbrirPDF))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
+                        .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelAlgoritmoLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLblQtdEstados)
+                                    .addComponent(JLblDerivacaoEstados)
+                                    .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTab.addTab("Algoritmo", jPanelAlgoritmo);
@@ -186,7 +260,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTab)
+            .addComponent(jTab, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
         );
 
         pack();
@@ -217,8 +291,8 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < 12; i++) {
             getPanel().add(getJtextField());
         }
-
         getPanel().add(getBtnAdd());
+        getPanelLoader().setVisible(false);
     }
 
     private void jBtnSalvarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarTabelaActionPerformed
@@ -245,7 +319,7 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        UtilAlgoritmoTuring.execute(getTableMappingAlgorithm(), datasExecution, getComponentsPanel(), this);
+        UtilAlgoritmoTuring.execute(getTableMappingAlgorithm(), datasExecution, getComponentsPanel(), this, getPanelLoader());
 
     }//GEN-LAST:event_jBtnProcessarMouseClicked
 
@@ -256,6 +330,10 @@ public class Principal extends javax.swing.JFrame {
     private void jBtnAbrirPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnAbrirPDFMouseClicked
         openDialogFile();
     }//GEN-LAST:event_jBtnAbrirPDFMouseClicked
+
+    private void jBtnGerarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarTabelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnGerarTabelaActionPerformed
 
     private JPanel getPanel() {
         return jPanelDados;
@@ -270,6 +348,7 @@ public class Principal extends javax.swing.JFrame {
         jTextField.setSize(100, 10);
         jTextField.setPreferredSize(new Dimension(60, 40));
         jTextField.setAutoscrolls(false);
+        jTextField.setHorizontalAlignment(JTextField.CENTER);
         return jTextField;
     }
 
@@ -327,8 +406,20 @@ public class Principal extends javax.swing.JFrame {
         return jTxtVariaveis.getText();
     }
 
+    private void setVariaveis(String variaveis){
+        jTxtVariaveis.setText(variaveis);
+    }
+    
     private String getQtdEstados() {
         return jTxtQtdEstados.getText();
+    }
+    
+    private void setQtdEstados(String qtdEstados){
+        jTxtQtdEstados.setText(qtdEstados);
+    }
+    
+    private JPanel getPanelLoader(){
+        return jPanelExec;
     }
 
     private void openDialogFile() {
@@ -339,11 +430,15 @@ public class Principal extends javax.swing.JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             try {
                 List<String> lines = UtilFile.readLines(selectedFile.getAbsolutePath());
-                String[] dados = new String[lines.size()];
-                Integer pos = 0;
+                String[] dadosIniciais = lines.get(0).split("\\|");
+                
+                setQtdEstados(dadosIniciais[0]);
+                setVariaveis(dadosIniciais[1]);
+                
+                String[] dadosTabela = new String[lines.size() - 1];
                 Boolean documentoValido = true;
-
-                for (String line : lines) {
+                for(int i = 1; i < lines.size(); i++) {
+                    String line = lines.get(i);
 
                     if (line.trim().isEmpty()) {
                         continue;
@@ -356,13 +451,11 @@ public class Principal extends javax.swing.JFrame {
                         break;
                     }
 
-                    dados[pos++] = line;
+                    dadosTabela[i-1] = line;
                 }
 
                 if (documentoValido) {
-                    jTxtQtdEstados.setText("4");
-                    jTxtVariaveis.setText(">;*");
-                    createTable(dados);
+                    createTable(dadosTabela);
                 } else {
                     JOptionPane.showMessageDialog(null, "Formato do documento inválido");
                 }
@@ -412,9 +505,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jBtnGerarTabela;
     private javax.swing.JButton jBtnProcessar;
     private javax.swing.JButton jBtnSalvarTabela;
+    private javax.swing.JLabel jGifLoader;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLblQtdEstados;
+    private javax.swing.JLabel jLblTitle;
     private javax.swing.JPanel jPanelAlgoritmo;
     private javax.swing.JPanel jPanelDados;
+    private javax.swing.JPanel jPanelExec;
     private javax.swing.JPanel jPanelExecucao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPanel;

@@ -9,15 +9,16 @@ import javax.swing.JTextField;
 import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import modelos.Item;
 import modelos.ItensEstados;
 
 public final class UtilAlgoritmoTuring {
 
-    public static void execute(List<Item> itens, List<String> operacao, Component[] components, JFrame frame) {
+    public static void execute(List<Item> itens, List<String> operacao, Component[] components, JFrame frame, JPanel panelLoader) {
         updateDataFields(components, operacao);
         paintDataFieldFocus(0, components);
-        enableFrame(false, frame);    
+        enableFrame(false, frame,panelLoader);  
         
         System.out.println("Itens = "+itens.toString());        
         System.out.println("Operacao = "+operacao.toString());
@@ -43,8 +44,9 @@ public final class UtilAlgoritmoTuring {
                     paintDataFieldFocus(pos, components);
 
                     if (estadoAnalisado.getDirecao().equals(DirecaoEnum.FIM.getSimbolo())) {
-                        JOptionPane.showMessageDialog(null, "Execução realizada com sucesso!");
-                        enableFrame(true, frame);
+                        updateDataFields(components, operacao);
+                        enableFrame(true, frame, panelLoader);
+                        JOptionPane.showMessageDialog(null, "Execução realizada com sucesso!");                        
                         this.cancel();                        
                     }
 
@@ -56,8 +58,9 @@ public final class UtilAlgoritmoTuring {
                     
                 } catch (Exception e) {
                     e.printStackTrace();
+                    updateDataFields(components, operacao);
+                    enableFrame(true, frame, panelLoader);
                     JOptionPane.showMessageDialog(null, "Erro ao executar algoritmo!", null, JOptionPane.ERROR_MESSAGE);
-                    enableFrame(true, frame);
                     this.cancel();
                 }
 
@@ -85,8 +88,9 @@ public final class UtilAlgoritmoTuring {
         }
     }
     
-    private static void enableFrame(boolean editable, JFrame frame){
+    private static void enableFrame(boolean editable, JFrame frame, JPanel panelLoader){
         frame.setEnabled(editable);
+        panelLoader.setVisible(!editable);
     }
     
 }
