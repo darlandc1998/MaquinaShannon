@@ -1,0 +1,25 @@
+8|>;*
+>;>;Q0; ;DIREITA
+>; ; ; ;
+>; ; ; ;
+Q0; ; ; ;
+Q0; ; ; ;
+Q0;*;Q1;>;DIREITA
+Q1; ; ; ;
+Q1;*;Q1;*;DIREITA
+Q1; ;Q2; ;DIREITA
+Q2; ; ; ;
+Q2;*;Q2;*;DIREITA
+Q2; ;Q3; ;ESQUERDA
+Q3; ; ; ;
+Q3;*;Q4; ;ESQUERDA
+Q3; ;Q5; ;ESQUERDA
+Q4;>;Q0; ;DIREITA
+Q4;*;Q4;*;ESQUERDA
+Q4; ;Q4; ;ESQUERDA
+Q5;>;Q6;*;ESQUERDA
+Q5;*;Q5;*;ESQUERDA
+Q5; ;Q5;>;FIM
+Q6; ;Q6;>;FIM
+Q6; ; ; ;
+Q6; ; ; ;
