@@ -57,6 +57,8 @@ public class Principal extends javax.swing.JFrame {
         jBtnSalvarTabela = new javax.swing.JButton();
         jBtnAbrirPDF = new javax.swing.JButton();
         btLimparTabela = new javax.swing.JButton();
+        jSliderDelay = new javax.swing.JSlider();
+        jLblDelay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Máquina de Shannon");
@@ -112,7 +114,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jLblTitle.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
-        jLblTitle.setText("Máquina de Shannon ");
+        jLblTitle.setText("Máquina de Turing");
 
         btApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eraser.png"))); // NOI18N
         btApagar.setToolTipText("Executar");
@@ -144,9 +146,8 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLblTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btApagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelExecucaoLayout.setVerticalGroup(
@@ -160,7 +161,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(jPanelExec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
         jTab.addTab("Execução", jPanelExecucao);
@@ -232,6 +233,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jSliderDelay.setMajorTickSpacing(1);
+        jSliderDelay.setMaximum(5);
+        jSliderDelay.setMinimum(1);
+        jSliderDelay.setMinorTickSpacing(1);
+        jSliderDelay.setPaintLabels(true);
+        jSliderDelay.setToolTipText("");
+        jSliderDelay.setValue(1);
+
+        jLblDelay.setText("Delay de execução (Segundos)");
+
         javax.swing.GroupLayout jPanelAlgoritmoLayout = new javax.swing.GroupLayout(jPanelAlgoritmo);
         jPanelAlgoritmo.setLayout(jPanelAlgoritmoLayout);
         jPanelAlgoritmoLayout.setHorizontalGroup(
@@ -248,10 +259,13 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(JLblDerivacaoEstados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
                         .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAlgoritmoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblDelay)
+                            .addComponent(jSliderDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,23 +278,27 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelAlgoritmoLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLblQtdEstados)
+                            .addComponent(JLblDerivacaoEstados)
+                            .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
-                        .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelAlgoritmoLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLblQtdEstados)
-                                    .addComponent(JLblDerivacaoEstados)
-                                    .addComponent(jTxtQtdEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTxtVariaveis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLblDelay)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSliderDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jTab.addTab("Algoritmo", jPanelAlgoritmo);
@@ -293,7 +311,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTab, javax.swing.GroupLayout.PREFERRED_SIZE, 416, Short.MAX_VALUE)
+            .addComponent(jTab)
         );
 
         pack();
@@ -321,7 +339,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnGerarTabelaMouseClicked
 
     private void initComponentsData() {
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             getPanel().add(getJtextField());
         }
         getPanel().add(getBtnAdd());
@@ -352,7 +370,7 @@ public class Principal extends javax.swing.JFrame {
             return;
         }
 
-        UtilAlgoritmoTuring.execute(getTableMappingAlgorithm(), datasExecution, getComponentsPanel(), this, getPanelLoader());
+        UtilAlgoritmoTuring.execute(getTableMappingAlgorithm(), datasExecution, getComponentsPanel(), this, getPanelLoader(), jSliderDelay.getValue());
 
     }//GEN-LAST:event_jBtnProcessarMouseClicked
 
@@ -578,6 +596,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jBtnSalvarTabela;
     private javax.swing.JLabel jGifLoader;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLblDelay;
     private javax.swing.JLabel jLblQtdEstados;
     private javax.swing.JLabel jLblTitle;
     private javax.swing.JPanel jPanelAlgoritmo;
@@ -586,6 +605,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelExecucao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPanel;
+    private javax.swing.JSlider jSliderDelay;
     private javax.swing.JTabbedPane jTab;
     private javax.swing.JTable jTableVariaveis;
     private javax.swing.JTextField jTxtQtdEstados;

@@ -15,13 +15,14 @@ import modelos.ItensEstados;
 
 public final class UtilAlgoritmoTuring {
 
-    public static void execute(List<Item> itens, List<String> operacao, Component[] components, JFrame frame, JPanel panelLoader) {
+    public static void execute(List<Item> itens, List<String> operacao, Component[] components, JFrame frame, JPanel panelLoader, Integer delaySeconds) {
         updateDataFields(components, operacao);
         paintDataFieldFocus(0, components);
         enableFrame(false, frame,panelLoader);  
         
-        System.out.println("Itens = "+itens.toString());        
-        System.out.println("Operacao = "+operacao.toString());
+        if (delaySeconds == null){
+            delaySeconds = 1;
+        }
         
         new Timer().scheduleAtFixedRate(new TimerTask() {
             Integer pos = 0;
@@ -66,7 +67,7 @@ public final class UtilAlgoritmoTuring {
 
             }
 
-        }, 1000, 1000);
+        }, 1000, (delaySeconds * 1000));
     }
 
     private static void updateDataFields(Component[] components, List<String> operacao) {
