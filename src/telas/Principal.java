@@ -61,7 +61,7 @@ public class Principal extends javax.swing.JFrame {
         jLblDelay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Máquina de Shannon");
+        setTitle("Máquina de Turing");
         setAlwaysOnTop(true);
         setName("jFramePrincipal"); // NOI18N
         setResizable(false);
@@ -117,7 +117,7 @@ public class Principal extends javax.swing.JFrame {
         jLblTitle.setText("Máquina de Turing");
 
         btApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eraser.png"))); // NOI18N
-        btApagar.setToolTipText("Executar");
+        btApagar.setToolTipText("Limpar");
         btApagar.setMaximumSize(new java.awt.Dimension(40, 40));
         btApagar.setMinimumSize(new java.awt.Dimension(40, 40));
         btApagar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,6 +170,8 @@ public class Principal extends javax.swing.JFrame {
 
         JLblDerivacaoEstados.setText("Variáveis");
 
+        jTxtVariaveis.setToolTipText("Separe as variáveis por ;");
+
         jTableVariaveis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -221,7 +223,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btLimparTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eraser.png"))); // NOI18N
-        btLimparTabela.setToolTipText("Abrir algoritimo");
+        btLimparTabela.setToolTipText("Limpar algoritimo");
         btLimparTabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btLimparTabelaMouseClicked(evt);
@@ -322,11 +324,15 @@ public class Principal extends javax.swing.JFrame {
         String msgError = null;
 
         if (getVariaveis().trim().isEmpty()) {
-            msgError = "Variaveis vazias";
+            msgError = "Variáveis vazias";
         }
 
         if (getQtdEstados().trim().isEmpty()) {
             msgError = "Quantidade de estados vazia";
+        }
+        
+        if (!getQtdEstados().trim().chars().allMatch(Character::isDigit)){
+            msgError = "Estado deve ser um inteiro";
         }
 
         if (msgError != null) {
@@ -419,6 +425,7 @@ public class Principal extends javax.swing.JFrame {
         
         jTxtQtdEstados.setText("");
         jTxtVariaveis.setText("");
+        setTableMappingAlgorithm(null);
 
     }//GEN-LAST:event_btLimparTabelaActionPerformed
 
