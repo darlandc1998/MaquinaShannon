@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import modelos.Item;
 import utils.UtilAlgoritmoTuring;
 import utils.UtilFile;
@@ -44,6 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jGifLoader = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLblTitle = new javax.swing.JLabel();
+        btApagar = new javax.swing.JButton();
         jPanelAlgoritmo = new javax.swing.JPanel();
         jLblQtdEstados = new javax.swing.JLabel();
         JLblDerivacaoEstados = new javax.swing.JLabel();
@@ -54,6 +56,7 @@ public class Principal extends javax.swing.JFrame {
         jBtnGerarTabela = new javax.swing.JButton();
         jBtnSalvarTabela = new javax.swing.JButton();
         jBtnAbrirPDF = new javax.swing.JButton();
+        btLimparTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Máquina de Shannon");
@@ -92,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
         jPanelExecLayout.setHorizontalGroup(
             jPanelExecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExecLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(406, Short.MAX_VALUE)
                 .addGroup(jPanelExecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jGifLoader))
@@ -111,6 +114,21 @@ public class Principal extends javax.swing.JFrame {
         jLblTitle.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLblTitle.setText("Máquina de Shannon ");
 
+        btApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eraser.png"))); // NOI18N
+        btApagar.setToolTipText("Executar");
+        btApagar.setMaximumSize(new java.awt.Dimension(40, 40));
+        btApagar.setMinimumSize(new java.awt.Dimension(40, 40));
+        btApagar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btApagarMouseClicked(evt);
+            }
+        });
+        btApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btApagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelExecucaoLayout = new javax.swing.GroupLayout(jPanelExecucao);
         jPanelExecucao.setLayout(jPanelExecucaoLayout);
         jPanelExecucaoLayout.setHorizontalGroup(
@@ -120,30 +138,29 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jPanelExecucaoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanelExec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPanel)
                     .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                        .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLblTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btApagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)))
                 .addContainerGap())
-            .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLblTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelExecucaoLayout.setVerticalGroup(
             jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                .addGroup(jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelExecucaoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLblTitle)
-                .addGap(28, 28, 28)
+                .addGroup(jPanelExecucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLblTitle)
+                    .addComponent(btApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnProcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addComponent(jPanelExec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 60, Short.MAX_VALUE))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
 
         jTab.addTab("Execução", jPanelExecucao);
@@ -202,11 +219,24 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btLimparTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eraser.png"))); // NOI18N
+        btLimparTabela.setToolTipText("Abrir algoritimo");
+        btLimparTabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btLimparTabelaMouseClicked(evt);
+            }
+        });
+        btLimparTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparTabelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelAlgoritmoLayout = new javax.swing.GroupLayout(jPanelAlgoritmo);
         jPanelAlgoritmo.setLayout(jPanelAlgoritmoLayout);
         jPanelAlgoritmoLayout.setHorizontalGroup(
             jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
             .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,6 +252,8 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAlgoritmoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -232,7 +264,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelAlgoritmoLayout.createSequentialGroup()
                         .addGroup(jPanelAlgoritmoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jBtnGerarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +277,9 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnSalvarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnAbrirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLimparTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -260,7 +293,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTab, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+            .addComponent(jTab, javax.swing.GroupLayout.PREFERRED_SIZE, 416, Short.MAX_VALUE)
         );
 
         pack();
@@ -335,6 +368,42 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnGerarTabelaActionPerformed
 
+    private void btApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btApagarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btApagarMouseClicked
+
+    private void btApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApagarActionPerformed
+        // TODO add your handling code here:
+
+        for (int i = 0; i < getComponentsPanel().length; i++) {
+            Component component = getComponentsPanel()[i];
+            if (component instanceof JTextField) {
+                JTextField field = (JTextField) component;
+                field.setText("");
+            }
+        }
+
+    }//GEN-LAST:event_btApagarActionPerformed
+
+    private void btLimparTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLimparTabelaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btLimparTabelaMouseClicked
+
+    private void btLimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparTabelaActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel dm = (DefaultTableModel) jTableVariaveis.getModel();
+        int rowCount = dm.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+        
+        jTxtQtdEstados.setText("");
+        jTxtVariaveis.setText("");
+
+    }//GEN-LAST:event_btLimparTabelaActionPerformed
+
     private JPanel getPanel() {
         return jPanelDados;
     }
@@ -406,19 +475,19 @@ public class Principal extends javax.swing.JFrame {
         return jTxtVariaveis.getText();
     }
 
-    private void setVariaveis(String variaveis){
+    private void setVariaveis(String variaveis) {
         jTxtVariaveis.setText(variaveis);
     }
-    
+
     private String getQtdEstados() {
         return jTxtQtdEstados.getText();
     }
-    
-    private void setQtdEstados(String qtdEstados){
+
+    private void setQtdEstados(String qtdEstados) {
         jTxtQtdEstados.setText(qtdEstados);
     }
-    
-    private JPanel getPanelLoader(){
+
+    private JPanel getPanelLoader() {
         return jPanelExec;
     }
 
@@ -431,13 +500,13 @@ public class Principal extends javax.swing.JFrame {
             try {
                 List<String> lines = UtilFile.readLines(selectedFile.getAbsolutePath());
                 String[] dadosIniciais = lines.get(0).split("\\|");
-                
+
                 setQtdEstados(dadosIniciais[0]);
                 setVariaveis(dadosIniciais[1]);
-                
+
                 String[] dadosTabela = new String[lines.size() - 1];
                 Boolean documentoValido = true;
-                for(int i = 1; i < lines.size(); i++) {
+                for (int i = 1; i < lines.size(); i++) {
                     String line = lines.get(i);
 
                     if (line.trim().isEmpty()) {
@@ -451,7 +520,7 @@ public class Principal extends javax.swing.JFrame {
                         break;
                     }
 
-                    dadosTabela[i-1] = line;
+                    dadosTabela[i - 1] = line;
                 }
 
                 if (documentoValido) {
@@ -501,6 +570,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLblDerivacaoEstados;
+    private javax.swing.JButton btApagar;
+    private javax.swing.JButton btLimparTabela;
     private javax.swing.JButton jBtnAbrirPDF;
     private javax.swing.JButton jBtnGerarTabela;
     private javax.swing.JButton jBtnProcessar;
